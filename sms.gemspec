@@ -4,14 +4,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sms/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "sms"
+  spec.name          = "alidayu_sms"
   spec.version       = Sms::VERSION
   spec.authors       = ["jack ping"]
   spec.email         = ["525399584@qq.com"]
 
   spec.summary       = %q{sms send.}
   spec.description   = %q{sms send.}
-  spec.homepage      = "http://gitlab.ikcrm.com/ikcrm_server/ikcrm_sms"
+  spec.homepage      = "https://github.com/wangping0105/alidayu_sms"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "bin"
