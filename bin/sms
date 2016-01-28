@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+
+require "optparse"
+require "pp"
+require 'rack'
+
+$:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+require 'sms'
+
+options = {source: 'zucp', method: 'single'}
+attributes = {}
+
+OptionParser.new do |o|
+  o.banner = <<-EOF
+Usage:
+  Starting:
+    sms [-p <phone>] [-c <content>] [-m <model>] [-t <type>]
+
+  Querying:
+    sms -v
+
+  Options:
+EOF
+
+  o.on("-p", "--phone=phone", String, "send sms phone") do |x|
+    options[:phone] = x
+  end
+
+  o.on("-c", "--content=content", String, "send sms content") do |x|
+    options[:content] = x
+  end
+
+  o.on("-s", "--source=source", String, "send sms source [zucp|taobao] (Default: zucp)") do |x|
+    options[:source] = x
+  end
+
+  o.on("-m", "--m=method", String, "send sms method [single|batch] (Default: single)") do |x|
+    options[:method] = x
+  end
+
+  o.on("-a", "--a=attributes", String, "attributes: ()") do |x|
+    attributes = Rack::Utils.parse_nested_query(x)
+  end
+
+  o.on("-h", "--help", "Show help documentation") do |x|
+    puts o
+    exit
+  end
+
+  o.on("-v", "--version", "Show Sms version") do |x|
+    puts "Version: #{Sms::VERSION}"
+    exit
+  end
+end.parse!
+
+options.merge!(attributes)
+
+begin
+  puts options.inspect
+  puts SmsSender.new(options).send("#{options[:method]}Send", options[:phone])
+rescue => e
+  puts 'Uncaught exception'
+  puts e.message
+  puts e.backtrace.join("\n")
+end
+
+# sms -p 13262902619 -s taobao -a 'app_secret=5aff003ac3c7243da65adef1e7c9c363&app_key=23272925&sms_free_sign_name=爱客验证码&sms_template_code=SMS_2575137&sms_param[code]=xxx&sms_param[product]=ddd'
+
