@@ -1,18 +1,19 @@
 require 'net/http'
 
-module Sms
+module AlidayuSms
   class Alidayu
     attr_accessor :app_key, :app_secret, :post_url
     
     def initialize(options = {})
-      app_key = options[:app_key]
-      app_secret = options[:app_secret]
-      post_url = options[:post_url]
+      self.app_key = options['app_key']
+      self.app_secret = options['app_secret']
+      self.post_url = options['post_url']
     end
     
-    def standard_send_msg(code, product, _phones, _extend, _sms_free_sign_name, _sms_template_code)
-      _sms_param = "{'code':'#{code}','product':'#{product}'}"
+    def standard_send_msg(arg = [])
+      code, product, _phones, _extend, _sms_free_sign_name, _sms_template_code = arg
 
+      _sms_param = "{'code':'#{code}','product':'#{product}'}"
       _timestamp = Time.now.strftime("%F %T")
       options = {
         app_key: self.app_key,
@@ -29,7 +30,9 @@ module Sms
         sms_template_code: _sms_template_code,
         sms_type: 'normal'
       }
+
       options = sort_options(options)
+      puts "options: #{options}"
 
       md5_str = 加密(options)
       response = post(self.post_url, options.merge(sign: md5_str))

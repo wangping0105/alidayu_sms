@@ -7,13 +7,14 @@ require 'rack'
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 require 'alidayu_sms'
 
+options = {method: 'batchSendSms'}
 attributes = {}
 
 OptionParser.new do |o|
   o.banner = <<-EOF
 Usage:
   Starting:
-    alidayu_sms [-p <phone>] [-c <content>] [-m <model>] [-t <type>]
+    alidayu_sms [-p <phone>] [-c <code>] [-m <model>] [-t <type>]
 
   Querying:
     alidayu_sms -v
@@ -21,19 +22,19 @@ Usage:
   Options:
 EOF
 
-  o.on("-p", "--phone=phone", String, "send alidayu_sms phone") do |x|
-    options[:phone] = x
+  o.on("-p", "--phones=phones", String, "send alidayu_sms phones") do |x|
+    options[:phones] = x
   end
 
-  o.on("-c", "--content=content", String, "send alidayu_sms content") do |x|
-    options[:content] = x
+  o.on("-c", "--code=code", String, "send alidayu_sms code") do |x|
+    options[:code] = x
   end
 
   o.on("-s", "--source=source", String, "send alidayu_sms source [zucp|taobao] (Default: zucp)") do |x|
     options[:source] = x
   end
 
-  o.on("-m", "--m=method", String, "send alidayu_sms method [single|batch] (Default: single)") do |x|
+  o.on("-m", "--m=method", String, "send alidayu_sms method [batch] (Default: batch)") do |x|
     options[:method] = x
   end
 
@@ -54,9 +55,23 @@ end.parse!
 
 options.merge!(attributes)
 
+#测试用的， 不过我的key可能无效了哦
+options = options.merge(
+  :code=> 1314520,
+  :product => "王平爱王玲",
+  :extend => '',
+  :sms_free_sign_name=> "注册验证",
+  :sms_template_code=> "SMS_5045503"
+)
+sys_options = {
+  app_key: 23304964,
+  app_secret: "12b083a7c5e89ce3093067ddd65c4b5a",
+  post_url: 'http://gw.api.taobao.com/router/rest'
+}
+
 begin
   puts options.inspect
-  puts AlidayuSmsSender.new(options).send("#{options[:method]}Send", options[:phone])
+  puts AlidayuSmsSender.new(sys_options).send(options[:method], options)
 rescue => e
   puts 'Uncaught exception'
   puts e.message
