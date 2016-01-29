@@ -1,3 +1,3 @@
-module Sms
+module AlidayuSms
   VERSION = "0.1.0"
 end

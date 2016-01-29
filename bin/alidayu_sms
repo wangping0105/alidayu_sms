@@ -5,36 +5,35 @@ require "pp"
 require 'rack'
 
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
-require 'sms'
+require 'alidayu_sms'
 
-options = {source: 'zucp', method: 'single'}
 attributes = {}
 
 OptionParser.new do |o|
   o.banner = <<-EOF
 Usage:
   Starting:
-    sms [-p <phone>] [-c <content>] [-m <model>] [-t <type>]
+    alidayu_sms [-p <phone>] [-c <content>] [-m <model>] [-t <type>]
 
   Querying:
-    sms -v
+    alidayu_sms -v
 
   Options:
 EOF
 
-  o.on("-p", "--phone=phone", String, "send sms phone") do |x|
+  o.on("-p", "--phone=phone", String, "send alidayu_sms phone") do |x|
     options[:phone] = x
   end
 
-  o.on("-c", "--content=content", String, "send sms content") do |x|
+  o.on("-c", "--content=content", String, "send alidayu_sms content") do |x|
     options[:content] = x
   end
 
-  o.on("-s", "--source=source", String, "send sms source [zucp|taobao] (Default: zucp)") do |x|
+  o.on("-s", "--source=source", String, "send alidayu_sms source [zucp|taobao] (Default: zucp)") do |x|
     options[:source] = x
   end
 
-  o.on("-m", "--m=method", String, "send sms method [single|batch] (Default: single)") do |x|
+  o.on("-m", "--m=method", String, "send alidayu_sms method [single|batch] (Default: single)") do |x|
     options[:method] = x
   end
 
@@ -47,8 +46,8 @@ EOF
     exit
   end
 
-  o.on("-v", "--version", "Show Sms version") do |x|
-    puts "Version: #{Sms::VERSION}"
+  o.on("-v", "--version", "Show alidayu_sms version") do |x|
+    puts "Version: #{AlidayuSms::VERSION}"
     exit
   end
 end.parse!
@@ -57,7 +56,7 @@ options.merge!(attributes)
 
 begin
   puts options.inspect
-  puts SmsSender.new(options).send("#{options[:method]}Send", options[:phone])
+  puts AlidayuSmsSender.new(options).send("#{options[:method]}Send", options[:phone])
 rescue => e
   puts 'Uncaught exception'
   puts e.message
