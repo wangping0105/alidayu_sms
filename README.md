@@ -2,7 +2,7 @@
 阿里大鱼的短信发送api
 
 # Gemfile add
-gem 'alidayu_sms', git: 'git@github.com:wangping0105/alidayu_sms.git'
+gem 'alidayu_sms'
 
 # start
 ##生成配置文件示例！(my :app_key and :app_secret, Valid to 2016.02.22)
