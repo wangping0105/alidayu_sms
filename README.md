@@ -1,5 +1,5 @@
 # alidayu_sms
-阿里大鱼的短信发送api
+阿里大鱼的短信发送api，暂时只支持 alibaba.aliqin.fc.sms.num.send 短信发送
 
 # Gemfile add
 gem 'alidayu_sms'
