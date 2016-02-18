@@ -1,0 +1,6 @@
+# alidayu_sms
+阿里大鱼的短信发送api
+# Gemfile
+gem "sms", git: "ssh://gitlab@gitlab.ikcrm.com:40022/ikcrm_server/ikcrm_sms.git", branch: 'master'
+
+rake alidayu_sms:create_default_config_file
