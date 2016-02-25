@@ -18,7 +18,6 @@ end
 
 class AlidayuSmsSender
   attr_accessor :source, :template_code
-
   def initialize(options = {})
     if load_config.present? && load_config[:alidayu].present?
       options = load_config[:alidayu].merge(options)
@@ -27,6 +26,21 @@ class AlidayuSmsSender
     check_system_params(options)
 
     @source = AlidayuSms::Alidayu.new(options)
+    class_eval do
+      load_config[:alidayu][:sms_templates].each do |sms_template|
+        define_method("send_code_for_#{sms_template[:name]}") do |code, phone, extend = ""|
+          options = {
+            code: code, # 模板的{code}字段
+            phones: phone, # 手机号码
+            product: load_config[:alidayu][:product], # 模板的{product}字段
+            extend: extend, # 公共回传参数，在“消息返回”中会透传回该参数；举例：用户可以传入自己下级的会员ID，在消息返回时，该会员ID会包含在内，用户可以根据该会员ID识别是哪位会员使用了你的应用
+            sms_free_sign_name: sms_template[:sms_free_sign_name], # 短信签名
+            sms_template_code: sms_template[:sms_template_code] # 短信模板
+          }
+          AlidayuSmsSender.new.batchSendSms(options)
+        end
+      end
+    end
   end
 
   # 发送短信
@@ -41,14 +55,14 @@ class AlidayuSmsSender
     end
 
     check_params(flag, options)
-    puts "传入参数为：#{attr}"
+    puts "阿里大鱼传入参数为：#{attr}"
 
     @source.standard_send_msg(attr)
   end
 
   private
   def check_params(flag, options)
-    raise "自定义参数不全！\n你传入的: #{options.map{|k,v| k.to_sym}}\n需要传入: [:code :product :phones :extend :sms_free_sign_name :sms_template_code]"  if flag
+    raise "阿里大鱼自定义参数不全！\n你传入的: #{options.map{|k,v| k.to_sym}}\n需要传入: [:code :product :phones :extend :sms_free_sign_name :sms_template_code]"  if flag
   end
 
   def check_system_params(options)
@@ -58,8 +72,8 @@ class AlidayuSmsSender
       flag = true unless options[a]
       attr << options[a]
     end
-    raise "系统参数不全！\n你传入的: #{options.map{|k,v| k.to_sym}}\n需要传入: [:app_key, :app_secret, :post_url]\n请配置 alidayu_sms.yml"  if flag
-    puts "系统参数检测完毕！"
+    raise "阿里大鱼系统参数不全！\n你传入的: #{options.map{|k,v| k.to_sym}}\n需要传入: [:app_key, :app_secret, :post_url]\n请配置 alidayu_sms.yml"  if flag
+    puts "阿里大鱼系统参数检测完毕！"
   end
 end
 

@@ -13,6 +13,11 @@ defaults: &defaults
     app_key: 23304964
     app_secret: "12b083a7c5e89ce3093067ddd65c4b5a"
     post_url: 'http://gw.api.taobao.com/router/rest'
+    product: "阿里打鱼"
+    sms_templates:
+      - name: "sign_up"
+        sms_free_sign_name: "注册验证" # 短信签名
+        sms_template_code: "SMS_5019408" # 短信模板
 
 development:
   <<: *defaults
@@ -23,6 +28,7 @@ test:
 production:
   <<: *defaults
 ```
+
 ## hello world!
 ```ruby
 options = {
@@ -38,4 +44,9 @@ result = AlidayuSmsSender.new.batchSendSms(options)
 # 返回码参考 阿里大鱼 api文档
 ```
 
-
+# v0.2.0最新用法
+## 配置文件里的product即为 options里的 product: "阿里云", # 模板的{product}字段，配置好之后可以用如下方法
+```ruby
+# Alidayu::Sms.send_code_for_{name}(code, phone, extend="") {name}为配置文件sms_templates[:name] 
+Alidayu::Sms.send_code_for_sign_up(1314520, "1520122011")
+```

@@ -3,10 +3,11 @@ defaults: &defaults
     app_key: xxxx
     app_secret: xxxx
     post_url: 'http://gw.api.taobao.com/router/rest'
-    templates:
-      devise_supplier_applies_otp_code_confirm: "验证码：%{code}，有效期5分钟～ 如非本人操作，请忽略本短信"
-      devise_passwords_otp_code_confirm: "验证码：%{code}，有效期5分钟～ 如非本人操作，请忽略本短信"
-      devise_confirmations_otp_code_confirm: "验证码：%{code}，有效期5分钟，请尽快完成注册哦～ 如非本人操作，请忽略本短信"
+    product: "阿里打鱼"
+    sms_templates:
+      - name: "sign_up"
+        sms_free_sign_name: "注册验证" # 短信签名
+        sms_template_code: "SMS_5019408" # 短信模板
 
 development:
   <<: *defaults
