@@ -6,5 +6,6 @@ namespace :alidayu_sms do
     unless File.exist?("#{::Rails.root}/config/initializers/alidayu.rb")
       FileUtils.cp(File.expand_path("../../templates/alidayu.rb", __FILE__), "#{::Rails.root}/config/initializers/alidayu.rb")
     end
+    puts '阿里大鱼初始化成功'
   end
 end

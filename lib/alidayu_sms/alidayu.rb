@@ -3,17 +3,18 @@ require 'net/http'
 module AlidayuSms
   class Alidayu
     attr_accessor :app_key, :app_secret, :post_url
-    
+
     def initialize(options = {})
       self.app_key = options['app_key']
       self.app_secret = options['app_secret']
       self.post_url = options['post_url']
     end
-    
-    def standard_send_msg(arg = [])
-      code, product, _phones, _extend, _sms_free_sign_name, _sms_template_code = arg
 
-      _sms_param = "{'code':'#{code}','product':'#{product}'}"
+    def standard_send_msg(arg = [])
+      _sms_param, _phones, _extend, _sms_free_sign_name, _sms_template_code = arg
+
+      # 改成支持自定义参数
+      #_sms_param = "{'code':'#{code}','product':'#{product}'}"
       _timestamp = Time.now.strftime("%F %T")
       options = {
         app_key: self.app_key,
@@ -66,5 +67,3 @@ module AlidayuSms
     end
   end
 end
-
-

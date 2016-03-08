@@ -28,11 +28,12 @@ class AlidayuSmsSender
     @source = AlidayuSms::Alidayu.new(options)
     class_eval do
       load_config[:alidayu][:sms_templates].each do |sms_template|
-        define_method("send_code_for_#{sms_template[:name]}") do |code, phone, extend = ""|
+        define_method("send_code_for_#{sms_template[:name]}") do |phone, _sms_param = {}, extend = ""|
+          _sms_param[:product] ||= load_config[:alidayu][:product]
+
           options = {
-            code: code, # 模板的{code}字段
+            sms_param: _sms_param.to_json,
             phones: phone, # 手机号码
-            product: load_config[:alidayu][:product], # 模板的{product}字段
             extend: extend, # 公共回传参数，在“消息返回”中会透传回该参数；举例：用户可以传入自己下级的会员ID，在消息返回时，该会员ID会包含在内，用户可以根据该会员ID识别是哪位会员使用了你的应用
             sms_free_sign_name: sms_template[:sms_free_sign_name], # 短信签名
             sms_template_code: sms_template[:sms_template_code] # 短信模板
@@ -46,8 +47,7 @@ class AlidayuSmsSender
   # 发送短信
   def batchSendSms(options = {})
     options = HashWithIndifferentAccess.new(options)
-
-    arr = %w(code product phones extend sms_free_sign_name sms_template_code)
+    arr = %w(sms_param phones extend sms_free_sign_name sms_template_code)
     attr, flag = [], false
     arr.each do |a|
       flag = true unless options[a]

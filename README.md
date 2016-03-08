@@ -28,13 +28,11 @@ test:
 production:
   <<: *defaults
 ```
-
-## hello world!
+# v0.3.0 支持自定义模板了 && hello world!
 ```ruby
 options = {
-  code: 1314520, # 模板的{code}字段
-  phones: "1520122011,1591251515", # 手机号码
-  product: "阿里云", # 模板的{product}字段
+  sms_param: "{'code':'1314520','product':'阿里云'}",
+  phones: '152012211, 15921076830',
   extend: '', # 公共回传参数，在“消息返回”中会透传回该参数；举例：用户可以传入自己下级的会员ID，在消息返回时，该会员ID会包含在内，用户可以根据该会员ID识别是哪位会员使用了你的应用
   sms_free_sign_name: "注册验证", # 短信签名
   sms_template_code: "SMS_5045503" # 短信模板
@@ -43,10 +41,16 @@ result = AlidayuSmsSender.new.batchSendSms(options)
 
 # 返回码参考 阿里大鱼 api文档
 ```
-
-# v0.2.0最新用法
-## 配置文件里的product即为 options里的 product: "阿里云", # 模板的{product}字段，配置好之后可以用如下方法
+# v0.3.0最新用法
+## 配置文件里的product即为 sms_param = sms_param[:product] = "阿里云", 则可不传这个字段
 ```ruby
-# Alidayu::Sms.send_code_for_{name}(code, phone, extend="") {name}为配置文件sms_templates[:name] 
+# Alidayu::Sms.send_code_for_{name}( phone, sms_param={code: '1314520', product: '可选'}, extend="") {name}为配置文件sms_templates[:name]
+Alidayu::Sms.send_code_for_sign_up("15921076830", {code: '1314520'}, '')
+```
+
+# v0.2.0用法
+## 配置文件里的product即为 options里的 product: "阿里云", 模板的{product}字段，配置好之后可以用如下方法
+```ruby
+# Alidayu::Sms.send_code_for_{name}(code, phone, extend="") {name}为配置文件sms_templates[:name]
 Alidayu::Sms.send_code_for_sign_up(1314520, "1520122011")
 ```
