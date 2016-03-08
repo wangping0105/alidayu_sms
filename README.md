@@ -5,8 +5,8 @@
 gem 'alidayu_sms'
 
 # start
-##生成配置文件示例！(my :app_key and :app_secret, Valid to 2016.02.22)
-rake alidayu_sms:create_default_config_file
+##生成配置文件 rake alidayu_sms:create_default_config_file
+
 ```ruby
 defaults: &defaults
   alidayu:
