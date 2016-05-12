@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    alidayu_sms (0.3.0)
+    alidayu_sms (0.3.1)
       i18n
 
 GEM
@@ -26,7 +26,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (~> 4.1.12)
+  activesupport (~> 4.1)
   alidayu_sms!
   bundler (~> 1.9)
   rack

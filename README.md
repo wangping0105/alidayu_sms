@@ -43,7 +43,7 @@ production:
 Alidayu::Sms.send_code_for_sign_up("15921076830", {code: '1314520'}, '')
 ```
 
-# 自定义模板了
+# 自定义模板
 
 ```ruby
 

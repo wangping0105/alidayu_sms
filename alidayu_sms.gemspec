@@ -18,9 +18,9 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency  'i18n'
+  spec.add_dependency  'i18n', '~> 0'
   spec.add_development_dependency "bundler", "~> 1.9"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "activesupport", "~> 4.1.12"
-  spec.add_development_dependency 'rack'
+  spec.add_development_dependency "activesupport", "~> 4.1"
+  spec.add_development_dependency 'rack', '~> 0'
 end
