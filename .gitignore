@@ -15,4 +15,5 @@
 /public/Attachments/*
 public/system/*
 *~
+*.gem
 public/vc/*
