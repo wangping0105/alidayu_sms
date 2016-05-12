@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    alidayu_sms (0.2.0)
+    alidayu_sms (0.3.0)
       i18n
 
 GEM
@@ -31,3 +31,6 @@ DEPENDENCIES
   bundler (~> 1.9)
   rack
   rake (~> 10.0)
+
+BUNDLED WITH
+   1.11.2

@@ -25,7 +25,10 @@ class AlidayuSmsSender
     options = HashWithIndifferentAccess.new(options)
     check_system_params(options)
 
-    @source = AlidayuSms::Alidayu.new(options)
+    # 基础类实例
+    self.source = AlidayuSms::Alidayu.new(options)
+
+    # 动态方法
     class_eval do
       load_config[:alidayu][:sms_templates].each do |sms_template|
         define_method("send_code_for_#{sms_template[:name]}") do |phone, _sms_param = {}, extend = ""|
@@ -57,7 +60,7 @@ class AlidayuSmsSender
     check_params(flag, options)
     puts "阿里大鱼传入参数为：#{attr}"
 
-    @source.standard_send_msg(attr)
+    source.standard_send_msg(attr)
   end
 
   private

@@ -42,12 +42,12 @@ EOF
     attributes = Rack::Utils.parse_nested_query(x)
   end
 
-  o.on("-h", "--help", "Show help documentation") do |x|
+  o.on("-h", "--help", "帮助") do |x|
     puts o
     exit
   end
 
-  o.on("-v", "--version", "Show alidayu_sms version") do |x|
+  o.on("-v", "--version", "版本号") do |x|
     puts "Version: #{AlidayuSms::VERSION}"
     exit
   end

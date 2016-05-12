@@ -43,9 +43,13 @@ module AlidayuSms
 
     private
     def sort_options(**arg)
-      arg.sort_by{|k,v| k}.to_h
+      # arg.sort_by{|k,v| k}.to_h
+      hash = Hash.new
+      arg.sort.map{|e| hash[e[0]] = e[1] }
+      hash
     end
 
+    # 中文方法 ~
     def 加密(**arg)
       _arg = arg.map{|k,v| "#{k}#{v}"}
       md5("#{self.app_secret}#{_arg.join("")}#{self.app_secret}").upcase

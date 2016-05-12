@@ -1,11 +1,15 @@
 # alidayu_sms
 阿里大鱼的短信发送api，暂时只支持 alibaba.aliqin.fc.sms.num.send 短信发送
 
-# Gemfile add
+# Gemfile
+```ruby
 gem 'alidayu_sms'
+```
 
 # start
-##生成配置文件 rake alidayu_sms:create_default_config_file
+##生成配置文件 config/alidayu_sms.yml
+
+`rake alidayu_sms:create_default_config_file`
 
 ```ruby
 defaults: &defaults
@@ -28,8 +32,21 @@ test:
 production:
   <<: *defaults
 ```
-# v0.3.0 支持自定义模板了 && hello world!
+
+# 用法
+## 登录短信示例
+- 配置文件config/alidayu_sms.yml里的product即为 sms_param = sms_param[:product] = "阿里云", 则可不传这个字段
+
 ```ruby
+# Alidayu::Sms.send_code_for_{name}( phone, sms_param={code: '1314520', product: '可选'}, extend="") {name}为配置文件sms_templates[:name]
+
+Alidayu::Sms.send_code_for_sign_up("15921076830", {code: '1314520'}, '')
+```
+
+# 自定义模板了
+
+```ruby
+
 options = {
   sms_param: "{'code':'1314520','product':'阿里云'}",
   phones: '152012211, 15921076830',
@@ -40,17 +57,4 @@ options = {
 result = AlidayuSmsSender.new.batchSendSms(options)
 
 # 返回码参考 阿里大鱼 api文档
-```
-# v0.3.0最新用法
-## 配置文件里的product即为 sms_param = sms_param[:product] = "阿里云", 则可不传这个字段
-```ruby
-# Alidayu::Sms.send_code_for_{name}( phone, sms_param={code: '1314520', product: '可选'}, extend="") {name}为配置文件sms_templates[:name]
-Alidayu::Sms.send_code_for_sign_up("15921076830", {code: '1314520'}, '')
-```
-
-# v0.2.0用法
-## 配置文件里的product即为 options里的 product: "阿里云", 模板的{product}字段，配置好之后可以用如下方法
-```ruby
-# Alidayu::Sms.send_code_for_{name}(code, phone, extend="") {name}为配置文件sms_templates[:name]
-Alidayu::Sms.send_code_for_sign_up(1314520, "1520122011")
 ```
