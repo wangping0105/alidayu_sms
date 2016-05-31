@@ -58,7 +58,7 @@ options.merge!(attributes)
 #测试用的， 不过我的key可能无效了哦
 options = options.merge(
   :code=> 1314520,
-  :product => "王平爱王玲",
+  :product => "平 love 玲",
   :extend => '',
   :sms_free_sign_name=> "注册验证",
   :sms_template_code=> "SMS_5045503"
@@ -77,6 +77,3 @@ rescue => e
   puts e.message
   puts e.backtrace.join("\n")
 end
-
-# sms -p 13262902619 -s taobao -a 'app_secret=5aff003ac3c7243da65adef1e7c9c363&app_key=23272925&sms_free_sign_name=爱客验证码&sms_template_code=SMS_2575137&sms_param[code]=xxx&sms_param[product]=ddd'
-

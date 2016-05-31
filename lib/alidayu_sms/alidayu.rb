@@ -67,6 +67,7 @@ module AlidayuSms
         req.set_form_data(options)
         response = http.request(req).body
       end
+
       JSON(response)
     end
   end

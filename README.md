@@ -1,5 +1,5 @@
-# alidayu_sms
-阿里大鱼的短信发送api，暂时只支持 alibaba.aliqin.fc.sms.num.send 短信发送
+# alidayu_sms 简介
+- 阿里大鱼的短信发送api，暂时只支持 alibaba.aliqin.fc.sms.num.send 短信发送
 
 # Gemfile
 ```ruby
@@ -43,7 +43,7 @@ production:
 Alidayu::Sms.send_code_for_sign_up("15921076830", {code: '1314520'}, '')
 ```
 
-# 自定义模板
+# 自定义发送短信, 不基于模板哦
 
 ```ruby
 

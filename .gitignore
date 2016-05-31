@@ -8,7 +8,7 @@
 /log/*
 !/log/.keep
 /tmp
-/.idea
+.idea/
 /config/*.yml
 /test
 /public/api_chekoubei_doc/
