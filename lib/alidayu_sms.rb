@@ -6,12 +6,15 @@ require "active_support/all"
 require "alidayu_sms/version"
 require "alidayu_sms/alidayu"
 
+require 'erb' unless defined? ERB
 require 'yaml' unless defined? YMAL
 
 # 连接配置文件
 def load_config
   if defined? ::Rails
-    @sms_config ||= HashWithIndifferentAccess.new(YAML.load_file("#{::Rails.root}/config/alidayu_sms.yml")[::Rails.env] || {})
+    @sms_config ||= HashWithIndifferentAccess.new(
+      YAML.load(ERB::new(File.read("#{::Rails.root}/config/alidayu_sms.yml")).result)[::Rails.env] || {}
+    )
   else
     {}
   end
